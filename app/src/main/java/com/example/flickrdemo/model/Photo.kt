@@ -1,7 +1,12 @@
-package com.example.flickrdemo.network
+package com.example.flickrdemo.model
+
+import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 data class Photo(
+    @SerializedName("id")
     val id: String,
+    @Json(name = "owner")
     val owner: String,
     val secret: String,
     val server: String,

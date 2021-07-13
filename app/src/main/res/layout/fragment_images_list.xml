@@ -6,14 +6,14 @@
     <data>
         <variable
             name="flickrViewModel"
-            type="com.example.flickrdemo.model.FlickrViewModel" />
+            type="com.example.flickrdemo.viewmodels.ImagesListViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".FirstFragment">
+        tools:context=".ui.images_list.ImagesListFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -46,7 +46,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:progressBar="@{flickrViewModel.responseSent}"
+            app:progressBar="@{flickrViewModel.showLoadingLiveData}"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

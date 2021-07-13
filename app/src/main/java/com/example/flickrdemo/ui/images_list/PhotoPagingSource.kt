@@ -1,7 +1,9 @@
-package com.example.flickrdemo.network
+package com.example.flickrdemo.ui.images_list
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.example.flickrdemo.model.Photo
+import com.example.flickrdemo.network.FlickrAPI
 import com.google.gson.Gson
 import retrofit2.HttpException
 import java.io.IOException
@@ -35,13 +37,13 @@ class PhotoPagingSource(private val lat: String, private val lon: String) :
                 resType,
                 nextPageNumber
             )
-            val formattedResponse = response.removePrefix("jsonFlickrApi(").removeSuffix(")")
+            val formattedResponse = response
 
-            val result = gson.fromJson(formattedResponse, JsonFlickrApi::class.java)
+
             return LoadResult.Page(
-                data = result.photos.photo,
+                data = response.photos.photo,
                 prevKey = null,
-                nextKey = (result.photos.page) + 1
+                nextKey = (nextPageNumber) + 1
             )
         } catch (e: IOException) {
             // IOException for network failures.

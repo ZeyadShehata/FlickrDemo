@@ -1,4 +1,4 @@
-package com.example.flickrdemo
+package com.example.flickrdemo.ui.images_list
 
 import android.app.Dialog
 import android.content.Intent
@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flickrdemo.databinding.DialogPhotoBinding
 import com.example.flickrdemo.databinding.PhotoItemBinding
-import com.example.flickrdemo.network.Photo
+import com.example.flickrdemo.model.Photo
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -95,7 +95,6 @@ class Photo2Adapter(
                 dialog.setContentView(b.root)
                 dialog.show()
             }
-            //viewModel.setResponseSent()
             binding.executePendingBindings()
         }
 

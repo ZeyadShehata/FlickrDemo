@@ -1,4 +1,4 @@
-package com.example.flickrdemo
+package com.example.flickrdemo.ui.map
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.example.flickrdemo.databinding.FragmentSecondBinding
-import com.example.flickrdemo.model.MapViewModel
+import com.example.flickrdemo.databinding.FragmentMapBinding
+import com.example.flickrdemo.viewmodels.MapViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 /**
@@ -21,7 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions
  */
 class MapFragment : Fragment(), OnMapReadyCallback {
     private val viewModel: MapViewModel by viewModels()
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentMapBinding? = null
 
     private val binding get() = _binding!!
 
@@ -30,14 +28,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentMapBinding.inflate(inflater, container, false)
         binding.mapViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.mapView?.onCreate(savedInstanceState)
         binding.mapView.getMapAsync(this)
         viewModel.navigateToResults.observe(viewLifecycleOwner,
-            Observer<Boolean?> { navigate ->
-                if (navigate) {
+            { navigate ->
+                if (navigate == true) {
                     val navController = findNavController()
                     navController.navigate(
                         MapFragmentDirections.actionSecondFragmentToFirstFragment(
@@ -99,25 +97,17 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap) {
         if (viewModel.checkLatLon()) {
             p0.addMarker(
-                MarkerOptions().position(viewModel.returnLatLon()).title("current position")
+                    MarkerOptions().position(viewModel.returnLatLon()).title("current position")
             )
         }
-        p0.setOnMapClickListener(object : GoogleMap.OnMapClickListener {
-
-            override fun onMapClick(latLng: LatLng) {
-
-                p0.clear()
-                p0.addMarker(
-                    MarkerOptions().position(latLng).title("current position")
-                )
-                p0.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-                viewModel.saveCoords(latLng.latitude.toString(), latLng.longitude.toString())
-
-
-            }
-
-
-        })
+        p0.setOnMapClickListener { latLng ->
+            p0.clear()
+            p0.addMarker(
+                MarkerOptions().position(latLng).title("current position")
+            )
+            p0.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+            viewModel.saveCoords(latLng.latitude.toString(), latLng.longitude.toString())
+        }
 
     }
 

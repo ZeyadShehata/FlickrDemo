@@ -8,10 +8,10 @@ import androidx.databinding.BindingAdapter
 import coil.load
 
 @BindingAdapter("imageUrl")
-fun bindImage(imgView: ImageView, imgUrl: String?) {
+fun ImageView.bindImage(imgUrl: String?) {
     imgUrl?.let {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        imgView.load(imgUri) {
+        this.load(imgUri) {
             placeholder(R.drawable.ic_baseline_loop_24)
             error(R.drawable.ic_not_loaded)
         }
@@ -19,12 +19,13 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 }
 
 @BindingAdapter("progressBar")
-fun bindProgress(pBar: ProgressBar,responseRec:Boolean){
-    if(responseRec == true){
-        pBar.visibility=  View.GONE
-    }
-    else
-        pBar.visibility=  View.VISIBLE
+fun ProgressBar.bindProgress(oldResponseRec:Boolean, newResponseRec: Boolean){
+    if(newResponseRec != oldResponseRec)
+        if(newResponseRec){
+            this.visibility=  View.GONE
+        }
+        else
+            this.visibility=  View.VISIBLE
 }
 
 

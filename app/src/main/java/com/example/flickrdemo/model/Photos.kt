@@ -1,4 +1,4 @@
-package com.example.flickrdemo.network
+package com.example.flickrdemo.model
 
 data class Photos(
     val page: Int,

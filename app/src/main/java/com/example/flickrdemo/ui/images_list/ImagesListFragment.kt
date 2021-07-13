@@ -1,4 +1,4 @@
-package com.example.flickrdemo
+package com.example.flickrdemo.ui.images_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,18 +10,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.flickrdemo.databinding.FragmentFirstBinding
-import com.example.flickrdemo.model.FlickrViewModel
-import com.example.flickrdemo.network.Photo
+import com.example.flickrdemo.R
+import com.example.flickrdemo.databinding.FragmentImagesListBinding
+import com.example.flickrdemo.model.Photo
+import com.example.flickrdemo.viewmodels.ImagesListViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment() {
-    private val navigationArgs: FirstFragmentArgs by navArgs()
-    private var _binding: FragmentFirstBinding? = null
+class ImagesListFragment : Fragment() {
+    private val navigationArgs: ImagesListFragmentArgs by navArgs()
+    private var _binding: FragmentImagesListBinding? = null
 
     object PhotoComparator : DiffUtil.ItemCallback<Photo>() {
         override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
@@ -42,8 +43,8 @@ class FirstFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var viewModel = FlickrViewModel(navigationArgs.lat, navigationArgs.lon)
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_first, container, false)
+        val viewModel = ImagesListViewModel(navigationArgs.lat, navigationArgs.lon)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_images_list, container, false)
         binding.flickrViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
@@ -60,9 +61,7 @@ class FirstFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-
             viewModel.flow.collectLatest { pagingData ->
-
                 pagingAdapter.submitData(pagingData)
 
             }

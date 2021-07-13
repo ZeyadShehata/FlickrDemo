@@ -1,4 +1,4 @@
-package com.example.flickrdemo.model
+package com.example.flickrdemo.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,9 +17,6 @@ class MapViewModel : ViewModel() {
         get() = _navigateToResults
     private var latlon: LatLng? = null
     fun doneSearching() {
-
-        _lat.value = null
-        _lon.value = null
         _navigateToResults.value = false
     }
 

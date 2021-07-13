@@ -6,13 +6,13 @@
     <data>
         <variable
             name="mapViewModel"
-            type="com.example.flickrdemo.model.MapViewModel" />
+            type="com.example.flickrdemo.viewmodels.MapViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MapFragment">
+        tools:context=".ui.map.MapFragment">
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
